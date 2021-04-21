@@ -1,0 +1,10 @@
+
+.home-team, .away-team, .middle {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.home-team, .away-team {
+	font-weight: bold;
+}

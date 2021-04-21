@@ -1,1 +1,28 @@
 <app-logo></app-logo>
+
+<ion-content>
+
+	<div *ngIf="show_login_form; else registerForm">
+		<ion-grid>
+			<ion-row>
+				<ion-col size="6" offset="3">
+					<app-login-form></app-login-form>					
+				</ion-col>
+			</ion-row>
+		</ion-grid>
+
+	</div>
+	<ng-template #registerForm>
+		<ion-grid>
+			<ion-row>
+				<ion-col size="6" offset="3">
+					<app-register-form></app-register-form>				
+				</ion-col>
+			</ion-row>
+		</ion-grid>
+	</ng-template>
+
+	<ion-button href='/matches'>Matches</ion-button>
+
+</ion-content>
+

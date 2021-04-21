@@ -8,6 +8,8 @@ import { MatchesPageRoutingModule } from './matches-routing.module';
 
 import { MatchesPage } from './matches.page';
 
+import { MatchCardComponent } from '../../components/match-card/match-card.component';
+
 @NgModule({
   imports: [
     CommonModule,
@@ -15,6 +17,6 @@ import { MatchesPage } from './matches.page';
     IonicModule,
     MatchesPageRoutingModule
   ],
-  declarations: [MatchesPage]
+  declarations: [MatchesPage, MatchCardComponent]
 })
 export class MatchesPageModule {}

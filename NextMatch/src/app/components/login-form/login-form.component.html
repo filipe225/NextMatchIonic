@@ -1,25 +1,19 @@
 
-<ion-grid>
-	<ion-row>
-		<ion-col>
-			<form action="">
-				<ion-item>
-					<ion-label position="floating">Email</ion-label>
-					<ion-input type="text" [(ngModel)]="user.email" name="email"></ion-input>
-				</ion-item>
-				<ion-item>
-					<ion-label>Todo</ion-label>
-					<ion-input type="password" [(ngModel)]="user.password" name="password"></ion-input>
-				</ion-item>
-				<ion-item>
-					<ion-button color="primary">Login</ion-button>
-				</ion-item>
-			</form>
-		</ion-col>
-	</ion-row>
-	<ion-row>
-		<ion-label>
-			Not yet Registered ?  <ion-button (click)="showRegisterForm">Register here</ion-button>
-		</ion-label>
-	</ion-row>
-</ion-grid>
+
+<form [formGroup]="LoginForm">
+	<ion-item>
+		<ion-label position="floating">Email</ion-label>
+		<ion-input id="email" type="text" formControlName="email" name="email"></ion-input>
+	</ion-item>
+	<ion-item>
+		<ion-label position="floating">Password</ion-label>
+		<ion-input id="password" type="password" formControlName="password" name="password"></ion-input>
+	</ion-item>
+	<ion-item>
+		<ion-button color="primary" (click)="loginUser()">Login</ion-button>
+	</ion-item>
+</form>
+
+<ion-label>
+	Not yet Registered ?  <ion-button>Register here</ion-button>
+</ion-label>

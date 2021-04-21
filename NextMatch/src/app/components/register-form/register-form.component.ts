@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ɵɵtrustConstantResourceUrl } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 @Component({
 	selector: 'app-register-form',
@@ -7,14 +8,37 @@ import { Component, OnInit } from '@angular/core';
 })
 export class RegisterFormComponent implements OnInit {
 
-	user: Object = {
-		email: null,
-		password: null,
-		repeat_password: null
-	}
+	RegisterForm: FormGroup;
 
 	constructor() { }
 
-	ngOnInit() {}
+	ngOnInit() {
+		this.RegisterForm = new FormGroup(
+			{
+				email: new FormControl('', [ Validators.required ]),
+				password: new FormControl('', [Validators.required, Validators.minLength(6)]),
+				repeat_password: new FormControl('', [Validators.required])
+			},
 
+			{
+				updateOn: 'blur'
+			}
+		)
+	}
+
+	getEmail() {
+		return this.RegisterForm.get('email').value;
+	}
+
+	getPassword() {
+		return this.RegisterForm.get('password').value;
+	}
+
+	getRepeatPassword() {
+		return this.RegisterForm.get('repeat_password').value;
+	}
+
+	registerUser() {
+		console.log(this.getEmail(), this.getPassword(), this.getRepeatPassword());
+	}
 }
