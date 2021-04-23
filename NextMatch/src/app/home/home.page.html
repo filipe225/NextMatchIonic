@@ -5,9 +5,14 @@
 	<div *ngIf="show_login_form; else registerForm">
 		<ion-grid>
 			<ion-row>
-				<ion-col size="6" offset="3">
+				<ion-col size="8" offset="2">
 					<app-login-form></app-login-form>					
 				</ion-col>
+			</ion-row>
+			<ion-row>
+				<div class="full-center">
+					<ion-label>Not yet registered ? Register here</ion-label>
+				</div>
 			</ion-row>
 		</ion-grid>
 
@@ -15,9 +20,14 @@
 	<ng-template #registerForm>
 		<ion-grid>
 			<ion-row>
-				<ion-col size="6" offset="3">
+				<ion-col size="8" offset="2">
 					<app-register-form></app-register-form>				
 				</ion-col>
+			</ion-row>
+			<ion-row>
+				<div class="full-center">
+					<ion-label>Already registered ? Login here</ion-label>
+				</div>
 			</ion-row>
 		</ion-grid>
 	</ng-template>

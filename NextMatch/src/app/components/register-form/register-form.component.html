@@ -1,32 +1,22 @@
 
-<ion-grid>
-	<ion-row>
-		<ion-col>
-			<form [formGroup]="RegisterForm" >
-				<ion-item>
-					<h3>Register Form</h3>
-				</ion-item>
-				<ion-item>
-					<ion-label position="floating">Email</ion-label>
-					<ion-input type="text" formControlName="email" name="email"></ion-input>
-				</ion-item>
-				<ion-item>
-					<ion-label position="floating">Password</ion-label>
-					<ion-input type="password" formControlName="password" name="password"></ion-input>
-				</ion-item>
-				<ion-item>
-					<ion-label position="floating">Repeat Password</ion-label>
-					<ion-input type="password" formControlName="repeat_password" name="repeat_password"></ion-input>
-				</ion-item>
-				<ion-item>
-					<ion-button color="primary" (click)="registerUser()">Register</ion-button>
-				</ion-item>
-			</form>
-		</ion-col>
-	</ion-row>
-	<ion-row>
-		<ion-label>
-			Already Registered ?  <ion-button>Login here</ion-button>
-		</ion-label>
-	</ion-row>
-</ion-grid>
+
+<form [formGroup]="RegisterForm" >
+	<ion-item>
+		<h3>Register Form</h3>
+	</ion-item>
+	<ion-item>
+		<ion-label position="floating">Email</ion-label>
+		<ion-input type="text" formControlName="email" name="email"></ion-input>
+	</ion-item>
+	<ion-item>
+		<ion-label position="floating">Password</ion-label>
+		<ion-input type="password" formControlName="password" name="password"></ion-input>
+	</ion-item>
+	<ion-item>
+		<ion-label position="floating">Repeat Password</ion-label>
+		<ion-input type="password" formControlName="repeat_password" name="repeat_password"></ion-input>
+	</ion-item>
+	<ion-item>
+		<ion-button color="primary" (click)="registerUser()">Register</ion-button>
+	</ion-item>
+</form>
