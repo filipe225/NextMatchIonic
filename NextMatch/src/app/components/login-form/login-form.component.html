@@ -1,15 +1,15 @@
 
 
 <form [formGroup]="LoginForm">
-	<ion-item>
+
+	<ion-item lines="full">
 		<ion-label position="floating">Email</ion-label>
 		<ion-input id="email" type="text" formControlName="email" name="email"></ion-input>
 	</ion-item>
-	<ion-item>
+	<ion-item lines="full">
 		<ion-label position="floating">Password</ion-label>
 		<ion-input id="password" type="password" formControlName="password" name="password"></ion-input>
 	</ion-item>
-	<ion-item>
-		<ion-button color="primary" (click)="loginUser()">Login</ion-button>
-	</ion-item>
+	<ion-button color="primary" expand="block" (click)="loginUser()">Login</ion-button>
+
 </form>

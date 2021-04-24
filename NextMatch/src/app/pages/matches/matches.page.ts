@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { ToastController } from '@ionic/angular';
+import { Store } from 'src/app/store/store';
 
 interface Match {
 	home_team: string,
@@ -13,6 +15,8 @@ interface Match {
 	styleUrls: ['./matches.page.scss'],
 })
 export class MatchesPage implements OnInit {
+
+	loading: boolean = true;
 
 	matches: Array<Match> = [
 		{
@@ -32,9 +36,20 @@ export class MatchesPage implements OnInit {
 		}
 	]
 
-	constructor() { }
+	constructor(public store: Store, public toastCtrl: ToastController) { }
 
 	ngOnInit() {
 	}
 
+	async displayToast(message) {
+		const toast = await this.toastCtrl.create({
+			message: message,
+			duration: 1500
+		  });
+		  toast.present();
+	}
+
+	fetchNextMatches() {
+		//this.store.fetchNewData();
+	}
 }
