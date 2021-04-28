@@ -1,7 +1,7 @@
 <form [formGroup]="RegisterForm" >
 
 	<ion-title class="text-center">Register</ion-title>
-	
+
 	<ion-item>
 		<ion-label position="floating">Email</ion-label>
 		<ion-input type="text" formControlName="email" required></ion-input>
@@ -68,8 +68,8 @@
 
 	<ion-item>
 		<ion-label>Timezone</ion-label>
-		<ion-select formControlName="timezone" *ngFor="let timezone in timezones">
-			<ion-select-option [value]="timezone">{{ timezone }}</ion-select-option>
+		<ion-select formControlName="timezone">
+			<ion-select-option *ngFor="let timezone of timezones" [value]="timezone">{{ timezone }}</ion-select-option>
 		</ion-select>
 	</ion-item>
 	<div class="validation-errors">

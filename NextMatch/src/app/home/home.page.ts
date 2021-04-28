@@ -36,7 +36,7 @@ export class HomePage {
 		console.log(user_obj);
 
 		const response = this.store.registerUser(user_obj);
-		console.log(response);
+		console.log("Home page response ->>" , response);
 	}
 
 }

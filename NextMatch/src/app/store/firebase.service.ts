@@ -42,6 +42,9 @@ export class FirebaseService {
 
 			const resp = this.firestore.collection('users').doc(user_data.uid).set(user);
 			return resp;
+		}).then( data => {
+			console.log(data);
+			return data;
 		});
 	}
 }
