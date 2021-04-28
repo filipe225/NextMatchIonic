@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ToastController } from '@ionic/angular';
-import { Store } from 'src/app/store/store';
+import { StoreService } from 'src/app/store/store.service';
 
 interface Match {
 	home_team: string,
@@ -36,7 +36,7 @@ export class MatchesPage implements OnInit {
 		}
 	]
 
-	constructor(public store: Store, public toastCtrl: ToastController) { }
+	constructor(public store: StoreService, public toastCtrl: ToastController) { }
 
 	ngOnInit() {
 	}

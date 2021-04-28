@@ -1,15 +1,40 @@
 
 
-<form [formGroup]="LoginForm">
+<form [formGroup]="LoginForm" novalidate>
 
 	<ion-item lines="full">
 		<ion-label position="floating">Email</ion-label>
-		<ion-input id="email" type="text" formControlName="email" name="email"></ion-input>
+		<ion-input type="text" formControlName="email" required></ion-input>
 	</ion-item>
+	<div class="validation-errors">
+		<ng-container *ngFor="let validation of validation_messages.password">
+			<div class="error-message" 
+				*ngIf="LoginForm.get('password').hasError(validation.type) && (LoginForm.get('password').dirty || 
+										LoginForm.get('password').touched)">
+			{{ validation.message }}
+			</div>
+		</ng-container>
+	</div>
+
+	<br>
+
 	<ion-item lines="full">
 		<ion-label position="floating">Password</ion-label>
-		<ion-input id="password" type="password" formControlName="password" name="password"></ion-input>
+		<ion-input type="password" formControlName="password" required></ion-input>
 	</ion-item>
-	<ion-button color="primary" expand="block" (click)="loginUser()">Login</ion-button>
+	<div class="validation-errors">
+		<ng-container *ngFor="let validation of validation_messages.password">
+			<div class="error-message" 
+				*ngIf="LoginForm.get('password').hasError(validation.type) && (LoginForm.get('password').dirty || 
+										LoginForm.get('password').touched)">
+			{{ validation.message }}
+			</div>
+		</ng-container>
+	</div>
+
+	<br>
+
+
+	<ion-button color="primary" expand="block" (click)="loginUser()" [disabled]="LoginForm.status === 'INVALID'">Login</ion-button>
 
 </form>

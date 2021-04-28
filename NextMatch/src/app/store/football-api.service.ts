@@ -5,7 +5,7 @@ import { Injectable } from '@angular/core';
 @Injectable({
   	providedIn: 'root'
 })
-export class FirebaseService {
+export class FootballDataService {
 
 	private readonly header_options: HttpHeaders;
 

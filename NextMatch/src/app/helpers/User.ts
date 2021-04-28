@@ -1,6 +1,10 @@
 
 export interface User {
+	creation_timestamp: string
 	email: string,
-	time_zome: string,
-	teams: Array<Number>
+	type: string,
+	display_name: string,
+	timezone: string,
+	teams: Array<Number>,
+	last_request: string
 }
