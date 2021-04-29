@@ -35,8 +35,9 @@ export class HomePage {
 		console.log("Home component -> function registerUser");
 		console.log(user_obj);
 
-		const response = this.store.registerUser(user_obj);
+		const response = this.store.registerUser(user_obj)
 		console.log("Home page response ->>" , response);
+
 	}
 
 }

@@ -33,7 +33,7 @@ export class StoreService {
 		console.log('Current state', this.user$);
 	}
 
-	registerUser(user_obj) {
+	registerUser(user_obj): Promise<any> | Error {
 		console.log("Store Service -> Function registerUser");
 		const { email, password, repeat_password, display_name, timezone } = user_obj;
 
@@ -49,12 +49,11 @@ export class StoreService {
 			return new Error('Display name length is invalid');
 		}
 
-		return new Promise( (resolve, reject) => {
-			const response = this.firebase_service.registerUser(email, password, display_name, timezone);
-			resolve(response);
+		return new Promise( async (resolve, reject) => {
+			 const result = await this.firebase_service.registerUser(email, password, display_name, timezone);
+			 console.log(result);
+
 		})
-
-
 	}
 
 	loginUser(user_obj) {

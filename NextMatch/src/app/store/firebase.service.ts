@@ -13,38 +13,48 @@ export class FirebaseService {
 
 	loginUser(email, password) {
 
-		return new Promise( (resolve, reject) => {
-			const response = this.auth.signInWithEmailAndPassword(email, password);
-			console.log(response);
-			resolve(response);
-		});
+		return this.auth.signInWithEmailAndPassword(email, password)
+			.then(user => {
+				console.log(user);
+				return user;
+			});
+
 	}
 
-	registerUser(email: string, password: string, timezone: string, display_name: string) {
+	async registerUser(email: string, password: string, timezone: string, display_name: string) {
 
-		return new Promise( (resolve, reject) => {
-			const response = this.auth.createUserWithEmailAndPassword(email, password);
-			console.log(response);
-			resolve(response);
-		}).then( (user_data: any) => {
+		const result: any = await this.auth.createUserWithEmailAndPassword(email, password);
+		const user: User = {
+			type: 'normal',
+			email: email,
+			timezone: timezone,
+			display_name: display_name,
+			teams: [],
+			last_request: new Date().toISOString(),
+			creation_timestamp: new Date().toISOString()
+		}
 
-			console.log("function registerUser promise then")
+		const response = await this.firestore.collection('users').doc(result.uid).set(user);
+		return response
 
-			const user: User = {
-				type: 'normal',
-				email: email,
-				timezone: timezone,
-				display_name: display_name,
-				teams: [],
-				last_request: new Date().toISOString(),
-				creation_timestamp: new Date().toISOString()
-			}
+		// return this.auth.createUserWithEmailAndPassword(email, password)
+		// 	.then( (result: any) => {
+		// 		const user: User = {
+		// 			type: 'normal',
+		// 			email: email,
+		// 			timezone: timezone,
+		// 			display_name: display_name,
+		// 			teams: [],
+		// 			last_request: new Date().toISOString(),
+		// 			creation_timestamp: new Date().toISOString()
+		// 		}
 
-			const resp = this.firestore.collection('users').doc(user_data.uid).set(user);
-			return resp;
-		}).then( data => {
-			console.log(data);
-			return data;
-		});
+		// 		return this.firestore.collection('users').doc(result.uid).set(user);
+		// 	});
+	}
+
+	getAllCompetitionsTeams() {
+		console.log('Function getAllCompetitionsTeams()')
+		return this.firestore.collectionGroup('teams').get();
 	}
 }
