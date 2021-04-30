@@ -15,7 +15,19 @@ export class HomePage {
   	constructor(
 		  public toastController: ToastController,
 		  public store: StoreService
-	) {}
+	) {
+
+		new Promise( (resolve, reject) => {
+			const response = this.store.getAllTeams();
+			console.log(response);
+			resolve(response)
+		}).then(data => {
+			console.log(data);
+		})
+
+	}
+	
+
 
 	showRegisterForm() {
 		this.show_login_form = false;
@@ -31,13 +43,16 @@ export class HomePage {
 		this.store.loginUser(user_obj);
 	}
 
-	registerUser(user_obj) {
+	async registerUser(user_obj) {
 		console.log("Home component -> function registerUser");
 		console.log(user_obj);
 
-		const response = this.store.registerUser(user_obj)
-		console.log("Home page response ->>" , response);
-
+		try {
+			const response: any = await this.store.registerUser(user_obj);
+			console.log("Inside promise response", response)
+		} catch (error) {
+			
+		}
 	}
 
 }

@@ -4,6 +4,7 @@ import { User } from '../helpers/User';
 import { FirebaseService } from './firebase.service';
 import { FootballDataService } from './football-api.service';
 import { LocalStorageService } from './local-storage.service';
+import ReturnData  from '../helpers/ReturnData';
 
 @Injectable({
   	providedIn: 'root'
@@ -33,7 +34,7 @@ export class StoreService {
 		console.log('Current state', this.user$);
 	}
 
-	registerUser(user_obj): Promise<any> | Error {
+	async registerUser(user_obj) {
 		console.log("Store Service -> Function registerUser");
 		const { email, password, repeat_password, display_name, timezone } = user_obj;
 
@@ -49,11 +50,13 @@ export class StoreService {
 			return new Error('Display name length is invalid');
 		}
 
-		return new Promise( async (resolve, reject) => {
-			 const result = await this.firebase_service.registerUser(email, password, display_name, timezone);
-			 console.log(result);
-
-		})
+		try {
+			const data = await this.firebase_service.registerUser(email, password, display_name, timezone)
+			return data;		
+		} catch (error) {
+			return error;
+		}
+		
 	}
 
 	loginUser(user_obj) {
@@ -62,5 +65,10 @@ export class StoreService {
 		console.log(email, password);
 
 		this.firebase_service.loginUser(email, password);
+	}
+
+	async getAllTeams() {
+		const response = await this.firebase_service.getAllCompetitionsTeams();
+		return response;
 	}
 }

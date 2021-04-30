@@ -1,0 +1,23 @@
+
+<ion-content>
+
+	<ion-grid>
+		<ion-row>
+			<ion-col>
+				<ion-item>
+					<ion-label> Competition</ion-label>
+					<ion-select (ionChange)="getTeamsForCompetition($event.target.value)">
+						<ion-select-option *ngFor="let competition of competitions" [value]="competition">{{ competition }}</ion-select-option>
+					</ion-select>
+				</ion-item>				
+			</ion-col>
+		</ion-row>
+	</ion-grid>
+
+	<ion-list>
+		<div *ngFor="let team of teams">
+			<ion-label>{{ team.name }}</ion-label>
+		</div>
+	</ion-list>
+
+</ion-content>
