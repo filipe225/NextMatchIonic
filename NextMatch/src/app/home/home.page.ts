@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ToastController } from '@ionic/angular';
+import { LocalStorageService } from '../store/local-storage.service';
 import { StoreService } from '../store/store.service';
 
 @Component({
@@ -8,13 +9,16 @@ import { StoreService } from '../store/store.service';
 	styleUrls: ['home.page.scss'],
  
 })
-export class HomePage {
+export class HomePage implements OnInit {
 
 	show_login_form: Boolean = true;
 
+	local_storage_data: Object = null;
+
   	constructor(
 		  public toastController: ToastController,
-		  public store: StoreService
+		  public store: StoreService,
+		  public local_storage: LocalStorageService
 	) {
 
 		new Promise( (resolve, reject) => {
@@ -26,8 +30,10 @@ export class HomePage {
 		})
 
 	}
-	
 
+	ngOnInit() {
+		this.local_storage_data = this.local_storage.getData();
+	}
 
 	showRegisterForm() {
 		this.show_login_form = false;

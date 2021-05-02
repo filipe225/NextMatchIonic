@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Observable, Subscription } from 'rxjs';
+import Team from 'src/app/helpers/Team';
 import { StoreService } from 'src/app/store/store.service';
 
 @Component({
@@ -8,35 +10,35 @@ import { StoreService } from 'src/app/store/store.service';
 })
 export class TeamsPage implements OnInit {
 
-	competitions: Array<string>
+	competitions: any;
 
-	teams: Object
-	
-	placeholder_data: any;
+	teams: Array<Team>;
 
 	constructor(public store: StoreService) { }
 
 	ngOnInit() {
 		this.getTeamsCompetitions();
+
+		this.store.competition_teams$.subscribe( comps => {
+			this.competitions = comps;
+		});
 	}
 
 	getTeamsForCompetition(competition) {
-		console.log(competition);
-		this.placeholder_data.forEach( obj => {
+		this.competitions.forEach( obj => {
 			if(obj.league_name === competition) {
 				this.teams = obj.teams;
 			}
 		});
-		console.log("teams", this.teams);
 	}
 
 	async getTeamsCompetitions() {
-		const data: any = await this.store.getAllTeams();
+		const response = await this.store.getAllTeams();
 
-		console.log("GET TEAMS COMPETITIONS", data);
-
-		this.placeholder_data = data;
-		this.competitions = data.map( obj => obj.league_name)
+		if( !response.success) {
+			// create toast and go back
+			console.log("Erro");
+		}
 	}
 
 }

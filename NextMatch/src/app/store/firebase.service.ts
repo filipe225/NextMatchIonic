@@ -56,18 +56,32 @@ export class FirebaseService {
 	}
 
 	getAllCompetitionsTeams() {
+		
 		console.log('Function getAllCompetitionsTeams()')
 		return this.firestore.collection('teams').get().toPromise()
 			.then( (query_snapshot) => {
 				const data = [];
 				query_snapshot.forEach( doc => {
-					data.push(doc.data());
+					data.push(	
+						{ 
+							competition_id: doc.id, 
+							...doc.data() as Object 
+						}
+					);
 				});
 				console.log("snapshot data", data);
-				return data;
+				return {
+					success: true,
+					data: data
+				}
 			})
 			.catch( error => {
 				console.error(error);
+				return {
+					success: false,
+					message: '',
+					data: error.message
+				}
 			});
 	}
 }

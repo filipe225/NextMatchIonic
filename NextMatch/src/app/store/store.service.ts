@@ -4,7 +4,8 @@ import { User } from '../helpers/User';
 import { FirebaseService } from './firebase.service';
 import { FootballDataService } from './football-api.service';
 import { LocalStorageService } from './local-storage.service';
-import ReturnData  from '../helpers/ReturnData';
+import Competition from '../helpers/Competition';
+import Team from '../helpers/Team';
 
 @Injectable({
   	providedIn: 'root'
@@ -14,6 +15,9 @@ export class StoreService {
 	readonly user$: Observable<User>;
 	private _user$: BehaviorSubject<User>;
 
+	readonly competition_teams$: Observable<any>;
+	private _competition_teams$: BehaviorSubject<any>;
+
   	constructor(
 		  public football_service: FootballDataService,
 		  public firebase_service: FirebaseService,
@@ -22,6 +26,9 @@ export class StoreService {
 	  ) {
 		this._user$ = new BehaviorSubject<User>(null);
 		this.user$ = this._user$.asObservable();
+
+		this._competition_teams$ = new BehaviorSubject<any>(null);
+		this.competition_teams$ = this._competition_teams$.asObservable();
 	}
 
 	protected getUser() {
@@ -32,6 +39,14 @@ export class StoreService {
 		console.log('Previous state', this.user$);
 		this._user$.next(nextValue);
 		console.log('Current state', this.user$);
+	}
+
+	protected getCompetitionTeams() {
+		return this._competition_teams$.getValue();
+	}
+
+	protected setCompetitionTeams(next_value: any) {
+		this._competition_teams$.next(next_value);
 	}
 
 	async registerUser(user_obj) {
@@ -59,7 +74,7 @@ export class StoreService {
 		
 	}
 
-	loginUser(user_obj) {
+	async loginUser(user_obj) {
 		console.log('Store Service -> Function loginUser');
 		const { email, password } = user_obj;
 		console.log(email, password);
@@ -69,6 +84,52 @@ export class StoreService {
 
 	async getAllTeams() {
 		const response = await this.firebase_service.getAllCompetitionsTeams();
-		return response;
+
+		const competitions: Array<Competition> = [];
+
+		if ( response.success ) {
+			response.data.forEach( comp_obj => {
+				const teams: Array<Team> = [];
+
+				comp_obj.teams.forEach( team_obj => {
+					const team: Team = {
+						id: team_obj.id,
+						founded: team_obj.founded,
+						last_updated: team_obj.lastUpdated,
+						name: team_obj.name,
+						short_name: team_obj.shortName,
+						tla: team_obj.tla,
+						venue: team_obj.venue,
+						website: team_obj.website
+					}
+					teams.push(team);
+				})
+
+				const comp: Competition = {
+					id: parseInt(comp_obj.competition_id),
+					country: comp_obj.country,
+					league_name: comp_obj.league_name,
+					teams: teams
+				};
+
+				competitions.push(comp)
+			});
+
+		} else {
+			return {
+				success: false,
+				message: 'Failed to retrive competitions'
+			}
+		}
+
+		this.setCompetitionTeams(competitions);
+
+		console.log("Competitions", this.getCompetitionTeams());
+
+		return {
+			success: true,
+			message: 'Successfully retrieved competitions'
+		}
+
 	}
 }

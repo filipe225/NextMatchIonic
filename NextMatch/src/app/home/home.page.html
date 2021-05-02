@@ -1,4 +1,3 @@
-<app-logo></app-logo>
 
 <ion-content>
 
@@ -32,7 +31,16 @@
 		</ion-grid>
 	</ng-template>
 
+
+	<div *ngIF="local_storage_data">
+		<ion-label>
+			Check the latest request you made
+		</ion-label>
+		<ion-button>Go</ion-button>
+	</div>
+
 	<ion-button href='/matches'>Matches</ion-button>
 	<ion-button href="/teams">Teams</ion-button>
+
 </ion-content>
 

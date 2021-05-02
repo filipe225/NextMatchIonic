@@ -7,7 +7,9 @@
 				<ion-item>
 					<ion-label> Competition</ion-label>
 					<ion-select (ionChange)="getTeamsForCompetition($event.target.value)">
-						<ion-select-option *ngFor="let competition of competitions" [value]="competition">{{ competition }}</ion-select-option>
+						<ion-select-option *ngFor="let competition of competitions" [value]="competition.league_name">
+							{{ competition.league_name }}
+						</ion-select-option>
 					</ion-select>
 				</ion-item>				
 			</ion-col>
