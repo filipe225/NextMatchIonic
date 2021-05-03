@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ToastController } from '@ionic/angular';
+import { Match } from '../helpers/Match';
 import { LocalStorageService } from '../store/local-storage.service';
 import { StoreService } from '../store/store.service';
 
@@ -15,24 +16,62 @@ export class HomePage implements OnInit {
 
 	local_storage_data: Object = null;
 
+	muck_data = {
+		last_request: new Date().toISOString(),
+		matches: [
+			{
+				home_team: 'fc Porto',
+				away_team: 'SL Benfica',
+				competition: 'Liga NOS',
+				date: new Date(),
+				venue: 'Estadio do Dragao'
+			},
+			{
+				home_team: 'fc Porto',
+				away_team: 'SL Benfica',
+				competition: 'Liga NOS',
+				date: new Date(),
+				venue: 'Estadio do Dragao'
+			},
+			{
+				home_team: 'fc Porto',
+				away_team: 'SL Benfica',
+				competition: 'Liga NOS',
+				date: new Date(),
+				venue: 'Estadio do Dragao'
+			},
+			{
+				home_team: 'fc Porto',
+				away_team: 'SL Benfica',
+				competition: 'Liga NOS',
+				date: new Date(),
+				venue: 'Estadio do Dragao'
+			}
+		] as Match[]
+	}
+
   	constructor(
 		  public toastController: ToastController,
 		  public store: StoreService,
 		  public local_storage: LocalStorageService
 	) {
 
-		new Promise( (resolve, reject) => {
-			const response = this.store.getAllTeams();
-			console.log(response);
-			resolve(response)
-		}).then(data => {
-			console.log(data);
-		})
+		// new Promise( (resolve, reject) => {
+		// 	const response = this.store.getAllTeams();
+		// 	console.log(response);
+		// 	resolve(response)
+		// }).then(data => {
+		// 	console.log(data);
+		// })
 
 	}
 
 	ngOnInit() {
 		this.local_storage_data = this.local_storage.getData();
+		if( !this.local_storage_data) {
+			this.local_storage.setData(this.muck_data);
+			this.local_storage_data = this.local_storage.getData();
+		}
 	}
 
 	showRegisterForm() {

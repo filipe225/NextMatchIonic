@@ -13,10 +13,9 @@ import { AngularFireModule } from '@angular/fire';
 import { firebaseConfig } from '../environments/environment';
 import { AngularFireAuthModule } from '@angular/fire/auth';
 import { AngularFirestoreModule } from '@angular/fire/firestore/';
-import { LogoComponent } from './components/logo/logo.component';
 
 @NgModule({
-	declarations: [AppComponent, LogoComponent],
+	declarations: [AppComponent],
 	entryComponents: [],
 	imports: [
 		BrowserModule, 

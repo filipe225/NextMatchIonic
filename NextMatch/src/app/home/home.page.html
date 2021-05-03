@@ -1,4 +1,4 @@
-
+<app-logo></app-logo>
 <ion-content>
 
 	<div *ngIf="show_login_form; else registerForm">
@@ -32,11 +32,11 @@
 	</ng-template>
 
 
-	<div *ngIF="local_storage_data">
+	<div *ngIf="local_storage_data">
 		<ion-label>
 			Check the latest request you made
 		</ion-label>
-		<ion-button>Go</ion-button>
+		<ion-button href="/matches-offline">Go</ion-button>
 	</div>
 
 	<ion-button href='/matches'>Matches</ion-button>

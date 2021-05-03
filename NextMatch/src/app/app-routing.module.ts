@@ -19,6 +19,14 @@ const routes: Routes = [
     path: 'teams',
     loadChildren: () => import('./pages/teams/teams.module').then( m => m.TeamsPageModule)
   },
+  {
+    path: 'user-settings',
+    loadChildren: () => import('./pages/user-settings/user-settings.module').then( m => m.UserSettingsPageModule)
+  },
+  {
+    path: 'matches-offline',
+    loadChildren: () => import('./pages/matches-offline/matches-offline.module').then( m => m.MatchesOfflinePageModule)
+  },
 ];
 
 @NgModule({
