@@ -7,8 +7,8 @@ import { Injectable } from '@angular/core';
 })
 export class FootballDataService {
 
-	private readonly header_options: HttpHeaders = {
-        'X-Auth-Token': 'YOUR_API_TOKEN'
+	private readonly header_options = {
+        'X-Auth-Token': '4882ca4f5e6f4b6286814e9878749aa0'
     };
 
     private readonly base_url: string = 'http://api.football-data.org/v2/';
@@ -16,5 +16,21 @@ export class FootballDataService {
 	
   	constructor(public http: HttpClient) {
 	}
+    
+    getNextMatches(teams: Array<number>) {
+        const promises: Array<Promise<any>> = [];
+
+        teams.forEach( team_id => {
+            promises.push(
+                this.http.get('http://api.football-data.org/v2/teams/' + team_id + '/matches?limit=2', {
+                    "headers": {
+                        "x-rapidapi-host": "v3.football.api-sports.io",
+                        "X-Auth-Token": "4882ca4f5e6f4b6286814e9878749aa0"
+                    }
+                }).toPromise()                
+            )
+
+        })
+    }
 
 }

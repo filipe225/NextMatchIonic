@@ -12,6 +12,8 @@ import Team from '../helpers/Team';
 })
 export class StoreService {
 
+    private last_football_data_request: Date;
+
 	readonly user$: Observable<User>;
 	private _user$: BehaviorSubject<User>;
 

@@ -12,13 +12,20 @@ export class FirebaseService {
   	constructor(public auth: AngularFireAuth, public firestore: AngularFirestore) {
 	}
 
-	loginUser(email, password) {
+	async loginUser(email, password) {
 
-		return this.auth.signInWithEmailAndPassword(email, password)
-			.then(user => {
-				console.log(user);
-				return user;
-			});
+        const user_credential = await this.auth.signInWithEmailAndPassword(email, password);
+
+        console.log("User credentials", user_credential);
+    
+        // const user_document = global.users_ref.doc(user_uid);
+        // const document_data = await user_document.get();
+    
+        // if (doc.exists) {
+        //     console.log('Document data:', document_data.data());
+        // } else {
+        //     console.log('No such document!');
+        // }
 
 	}
 
