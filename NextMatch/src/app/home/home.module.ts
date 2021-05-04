@@ -9,6 +9,7 @@ import { HomePageRoutingModule } from './home-routing.module';
 import { LogoComponent } from "../components/logo/logo.component";
 import { LoginFormComponent } from "../components/login-form/login-form.component";
 import { RegisterFormComponent } from "../components/register-form/register-form.component";
+import { FooterComponent } from "../components/footer/footer.component";
 
 
 @NgModule({
@@ -19,6 +20,6 @@ import { RegisterFormComponent } from "../components/register-form/register-form
     IonicModule,
     HomePageRoutingModule
   ],
-  declarations: [HomePage, LogoComponent, LoginFormComponent, RegisterFormComponent]
+  declarations: [HomePage, LogoComponent, LoginFormComponent, RegisterFormComponent, FooterComponent]
 })
 export class HomePageModule {}
