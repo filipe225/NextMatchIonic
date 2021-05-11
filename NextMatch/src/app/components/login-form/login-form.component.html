@@ -7,10 +7,10 @@
 		<ion-input type="text" formControlName="email" required></ion-input>
 	</ion-item>
 	<div class="validation-errors">
-		<ng-container *ngFor="let validation of validation_messages.password">
+		<ng-container *ngFor="let validation of validation_messages.email">
 			<div class="error-message" 
-				*ngIf="LoginForm.get('password').hasError(validation.type) && (LoginForm.get('password').dirty || 
-										LoginForm.get('password').touched)">
+				*ngIf="LoginForm.get('email').hasError(validation.type) && (LoginForm.get('email').dirty || 
+										LoginForm.get('email').touched)">
 			{{ validation.message }}
 			</div>
 		</ng-container>

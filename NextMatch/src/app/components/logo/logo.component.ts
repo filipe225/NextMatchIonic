@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { StoreService } from 'src/app/store/store.service';
 
 @Component({
   selector: 'app-logo',
@@ -7,8 +8,14 @@ import { Component, OnInit } from '@angular/core';
 })
 export class LogoComponent implements OnInit {
 
-  constructor() { }
+    user = null;
 
-  ngOnInit() {}
+    constructor(public store: StoreService) { }
+
+    ngOnInit() {
+        this.store.user$.subscribe( value => {
+            this.user = value;
+        })
+    }
 
 }

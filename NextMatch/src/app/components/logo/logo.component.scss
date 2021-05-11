@@ -1,12 +1,19 @@
 .logo {
-	display: flex;
-	align-items: center;
-	justify-content: center;
 	height: 10vh;
 	min-height: 100px;
 	color: var(--ion-color-main);
 
 	h1 {
 		font-size: 30px;
+        display: block;
+        width: 100%;
+        text-align: center;
 	}
+
+    h6 {
+        display: block;
+        width: 100%;
+        margin: 0;
+        text-align: center;
+    }
 }

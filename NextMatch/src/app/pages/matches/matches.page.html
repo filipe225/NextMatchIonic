@@ -1,21 +1,17 @@
 
 <ion-content>
 
+    <app-logo></app-logo>
+
 	<ion-infinite-scroll threshold="100px" (ionInfinite)="loadData($event)">
-		<ion-infinite-scroll-content
-		  loadingSpinner="bubbles"
-		  loadingText="Loading more data...">
+		<ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="Loading more data...">
+            <div *ngFor="let match of matches">
+                <app-match-card [match]="match"></app-match-card>
+            </div>				
 		</ion-infinite-scroll-content>
 	  </ion-infinite-scroll>
 	  
-	<ion-grid>
-		<ion-row>
-			<ion-col size="10" offset="1">
-				<div *ngFor="let match of matches">
-					<app-match-card [match]="match"></app-match-card>
-				</div>				
-			</ion-col>
-		</ion-row>
-	</ion-grid>
 
+
+    <app-footer></app-footer>
 </ion-content>

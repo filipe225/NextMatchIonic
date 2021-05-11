@@ -1,5 +1,6 @@
 
 export interface User {
+    uid?: string,
 	creation_timestamp: string
 	email: string,
 	type: string,

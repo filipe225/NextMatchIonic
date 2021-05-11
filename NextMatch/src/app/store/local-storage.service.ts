@@ -25,11 +25,26 @@ export class LocalStorageService {
 
 	}
 
+    protected getState() {
+        return this._state$.value;
+    }
+
+    protected setState(value) {
+        this._state$.next(value);
+    }
+
 	getData() {
-		return JSON.parse(localStorage.getItem(this.local_key));
+		const data = JSON.parse(localStorage.getItem(this.local_key));
+        this.setState(data);
+        return data;
 	}
 
 	setData(data) {
 		return localStorage.setItem(this.local_key, JSON.stringify(data));
 	}
+
+    clearData() {
+        localStorage.removeItem(this.local_key);
+        return true;
+    }
 }

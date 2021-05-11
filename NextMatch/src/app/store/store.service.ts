@@ -6,6 +6,7 @@ import { FootballDataService } from './football-api.service';
 import { LocalStorageService } from './local-storage.service';
 import Competition from '../helpers/Competition';
 import Team from '../helpers/Team';
+import { R3ResolvedDependencyType } from '@angular/compiler';
 
 @Injectable({
   	providedIn: 'root'
@@ -37,9 +38,12 @@ export class StoreService {
 		return this._user$.getValue();
 	}
 
-	protected setUser(nextValue: User) : void {
+	protected setUser(nextValue: any) : void {
 		console.log('Previous state', this.user$);
-		this._user$.next(nextValue);
+		this._user$.next({
+            ...this.getUser(),
+            ...nextValue
+        });
 		console.log('Current state', this.user$);
 	}
 
@@ -79,9 +83,14 @@ export class StoreService {
 	async loginUser(user_obj) {
 		console.log('Store Service -> Function loginUser');
 		const { email, password } = user_obj;
-		console.log(email, password);
 
-		this.firebase_service.loginUser(email, password);
+		const response = await this.firebase_service.loginUser(email, password);
+        console.log(response);
+        if(response.success) {
+            this.setUser(response.data);
+        }
+
+        return response;
 	}
 
 	async getAllTeams() {
@@ -132,6 +141,76 @@ export class StoreService {
 			success: true,
 			message: 'Successfully retrieved competitions'
 		}
-
 	}
+
+    async followTeam(team_id: number, team_name: string) {
+        const user = this.getUser();
+        const max_teams = user.type === 'admin' ? 10 : 5;
+        
+        if (user.teams.length < max_teams) {
+            const teams = user.teams;
+            teams.push(team_id);
+            const response = await this.firebase_service.updateUserDocWithMerge(user.uid, {teams: teams});
+
+            if (response.success) {
+                this.setUser({
+                    teams: teams
+                });
+                return {
+                    success: true,
+                    message: `Following team ${team_name}`
+                }
+            } else {
+                return {
+                    success: false,
+                    message: 'Error following team. Try again later.'
+                }
+            }
+        } else {
+            return {
+                success: false,
+                message: 'Not possible to follow more teams. Unfollow one first.'
+            }
+        }
+    }
+
+    async unfollowTeam(team_id: number) {
+        const user = this.getUser();
+
+        const teams = user.teams;
+
+        teams.forEach( (id, i) => {
+            if (id=== team_id) {
+                teams.splice(i, 1);
+            }
+        });
+
+        const response = await this.firebase_service.updateUserDocWithMerge(user.uid, {teams: teams});
+        
+    }
+
+
+    getNextMatches(teams) {
+        // if (this.user$.type === 'normal') {}
+
+        if(teams.length === 0) {
+            return {
+                success: false,
+                message: 'Start following some teams',
+                data: null
+            }
+        }
+
+        const response:any = this.football_service.getNextMatches(teams);
+        if( response.success ) {
+            this.local_storage_service.setData({
+                last_request: new Date().toISOString(),
+                data: response.data
+            })
+        } else {
+            console.log("Successo falso");
+        }
+
+    }
+
 }

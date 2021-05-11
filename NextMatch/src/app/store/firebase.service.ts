@@ -14,27 +14,58 @@ export class FirebaseService {
 
 	async loginUser(email, password) {
 
-        const user_credential = await this.auth.signInWithEmailAndPassword(email, password);
+        try {
+            await this.auth.setPersistence('session');
+            const user_credential: any = await this.auth.signInWithEmailAndPassword(email, password);
 
-        console.log("User credentials", user_credential);
-    
-        // const user_document = global.users_ref.doc(user_uid);
-        // const document_data = await user_document.get();
-    
-        // if (doc.exists) {
-        //     console.log('Document data:', document_data.data());
-        // } else {
-        //     console.log('No such document!');
-        // }
+            console.log("User credentials", user_credential);
 
+            const user_data: any = await this.firestore.collection('users')
+                                        .doc(user_credential.user.uid).get().toPromise()
+                                        .then( doc => {
+                                            return doc.data();
+                                        });
+
+            console.log("User data", user_data)
+
+            const logged_user: User = {
+                uid: user_credential.user.uid,
+                email: user_credential.user.email,
+                display_name: user_credential.user.displayName,
+                creation_timestamp: user_data.creation_timestamp,
+                last_request: user_data.last_request,
+                teams: user_data.teams,
+                timezone: user_data.timezone,
+                type: user_data.type
+            }
+
+            return {
+                success: true,
+                message: 'Login successful',
+                data: logged_user
+            }
+        
+        } catch( error) {
+            console.error(error);
+            return {
+                success: false,
+                message: 'Erro',
+                data: null
+            }
+        };
 	}
 
-	async registerUser(email: string, password: string, timezone: string, display_name: string): Promise<ReturnData> {
+	async registerUser(email: string, password: string, display_name: string, timezone: string) {
 		console.log("Firebase Service --> Function registerUser()")
 
 		try {
 
 			const result: any = await this.auth.createUserWithEmailAndPassword(email, password);
+            console.log("registering User", result);
+            const u = this.auth.currentUser;
+            (await u).updateProfile({
+                displayName: display_name
+            });
 			const user: User = {
 				type: 'normal',
 				email: email,
@@ -45,7 +76,7 @@ export class FirebaseService {
 				creation_timestamp: new Date().toISOString()
 			}
 
-			const result_query = await this.firestore.collection('users').doc(result.uid).set(user)
+			const result_query = await this.firestore.collection('users').doc(result.user.uid).set(user)
 
 			return {
 				success: true,
@@ -59,8 +90,25 @@ export class FirebaseService {
 				message: ""
 			}
 		}
-
 	}
+
+    async updateUserDocWithMerge(uid, obj) {
+        try {
+          const result = await this.firestore.collection('users').doc(uid).set(obj, { merge: true });
+          console.log(result);
+          return {
+              success: true,
+              message: 'Successfully updated database',
+              data: result
+          }  
+        } catch (error) {
+            console.error(error);
+            return {
+                success: false,
+                message: 'Error updating database'
+            }
+        }
+    }
 
 	getAllCompetitionsTeams() {
 		

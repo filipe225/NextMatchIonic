@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { ToastController } from '@ionic/angular';
 import { Match } from '../helpers/Match';
+import { ToastService } from '../helpers/Toast';
 import { LocalStorageService } from '../store/local-storage.service';
 import { StoreService } from '../store/store.service';
 
@@ -53,25 +55,13 @@ export class HomePage implements OnInit {
   	constructor(
 		  public toastController: ToastController,
 		  public store: StoreService,
-		  public local_storage: LocalStorageService
-	) {
-
-		// new Promise( (resolve, reject) => {
-		// 	const response = this.store.getAllTeams();
-		// 	console.log(response);
-		// 	resolve(response)
-		// }).then(data => {
-		// 	console.log(data);
-		// })
-
-	}
+		  public local_storage: LocalStorageService,
+          public toast_service: ToastService,
+          public router: Router
+	) {	}
 
 	ngOnInit() {
 		this.local_storage_data = this.local_storage.getData();
-		if( !this.local_storage_data) {
-			this.local_storage.setData(this.muck_data);
-			this.local_storage_data = this.local_storage.getData();
-		}
 	}
 
 	showRegisterForm() {
@@ -82,10 +72,16 @@ export class HomePage implements OnInit {
 		this.show_login_form = true;
 	}
 
-	loginUser(user_obj) {
+	async loginUser(user_obj) {
 		console.log("Home component -> function loginUser")
 		console.log(user_obj);
-		this.store.loginUser(user_obj);
+		const response: any = await this.store.loginUser(user_obj);
+        if(response.success) {
+            this.toast_service.showToast(response.message, 'success', 1500);
+            this.router.navigateByUrl('/matches');
+        } else {
+            this.toast_service.showToast(response.message, 'danger', 1500);
+        }
 	}
 
 	async registerUser(user_obj) {
@@ -94,9 +90,13 @@ export class HomePage implements OnInit {
 
 		try {
 			const response: any = await this.store.registerUser(user_obj);
-			console.log("Inside promise response", response)
+			console.log("Inside promise response", response);
+            const color = response.success ? 'success' : 'danger';
+            this.toast_service.showToast(response.message, color, 2000);
+            this.showLoginForm();
+
 		} catch (error) {
-			
+			this.toast_service.showToast('Error registering. Try again later.', 'danger', 2000);
 		}
 	}
 

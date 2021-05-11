@@ -22,15 +22,29 @@ export class FootballDataService {
 
         teams.forEach( team_id => {
             promises.push(
-                this.http.get('http://api.football-data.org/v2/teams/' + team_id + '/matches?limit=2', {
+                this.http.get(`${this.base_url}teams/${team_id}/matches?limit=2`, {
                     "headers": {
                         "x-rapidapi-host": "v3.football.api-sports.io",
                         "X-Auth-Token": "4882ca4f5e6f4b6286814e9878749aa0"
                     }
                 }).toPromise()                
             )
+        });
 
-        })
+        const response = Promise.all(promises)
+                            .then( data => {
+                                console.log(data);
+                                return data;
+                            })
+                            .catch( error => {
+                                console.error(error);
+                                return {
+                                    success: false,
+                                    message: error.message
+                                }
+                            });
+        console.log(response);
+
     }
 
 }

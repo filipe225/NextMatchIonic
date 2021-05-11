@@ -1,13 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ToastController } from '@ionic/angular';
+import { Match } from 'src/app/helpers/Match';
 import { StoreService } from 'src/app/store/store.service';
-
-interface Match {
-	home_team: string,
-	away_team: string,
-	competition: string
-	date?: Date
-}
 
 @Component({
 	selector: 'app-matches',
@@ -39,9 +33,12 @@ export class MatchesPage implements OnInit {
 	constructor(public store: StoreService, public toastCtrl: ToastController) { }
 
 	ngOnInit() {
+        //this.displayToast('Hello world');
+        this.matches = [...this.matches, ...this.matches, ...this.matches];
+
 	}
 
-	async displayToast(message) {
+    async displayToast(message) {
 		const toast = await this.toastCtrl.create({
 			message: message,
 			duration: 1500

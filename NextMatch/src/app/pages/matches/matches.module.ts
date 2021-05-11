@@ -9,13 +9,15 @@ import { MatchesPageRoutingModule } from './matches-routing.module';
 import { MatchesPage } from './matches.page';
 
 import { MatchCardComponent } from '../../components/match-card/match-card.component';
+import { ComponentsModule } from "../../components/components.module";
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    MatchesPageRoutingModule
+    MatchesPageRoutingModule,
+    ComponentsModule
   ],
   declarations: [MatchesPage, MatchCardComponent]
 })
