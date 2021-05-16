@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import Team from 'src/app/helpers/Team';
+import { StoreService } from 'src/app/store/store.service';
 
 @Component({
   selector: 'app-user-settings',
@@ -7,9 +9,33 @@ import { Component, OnInit } from '@angular/core';
 })
 export class UserSettingsPage implements OnInit {
 
-  constructor() { }
+    teams: Array<Team>;
 
-  ngOnInit() {
-  }
+    constructor(public store: StoreService) { }
+
+    ngOnInit() {
+        this.teams = [
+            {
+                id: 3,
+                short_name: 'FCP',
+                name: 'FCP'
+            },
+            {
+                id: 3,
+                short_name: 'FCP',                
+                name: 'FCP'
+            },
+            {
+                id: 3,
+                short_name: 'FCP',                
+                name: 'FCP'
+            }
+        ]
+    }
+
+    async unfollowTeam(team_id) {
+        console.log(team_id);
+    }
+
 
 }

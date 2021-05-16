@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { Observable, Subscription } from 'rxjs';
 import Team from 'src/app/helpers/Team';
 import { StoreService } from 'src/app/store/store.service';
 
@@ -14,6 +13,8 @@ export class TeamsPage implements OnInit {
 
 	teams: Array<Team>;
 
+    user_teams: Array<Number>;
+
 	constructor(public store: StoreService) { }
 
 	ngOnInit() {
@@ -22,7 +23,25 @@ export class TeamsPage implements OnInit {
 		this.store.competition_teams$.subscribe( comps => {
 			this.competitions = comps;
 		});
+
+        this.store.user$.subscribe( user_data => {
+            this.user_teams = user_data.teams;
+        })
 	}
+
+    async addNewTeam(team_id, team_name) {
+        console.log("Team Id: ", team_id);
+
+        const response = await this.store.followTeam(team_id, team_name)
+        console.log(response);
+    }
+
+    async removeTeam(team_id, team_name) {
+        console.log("Team Id: ", team_id)
+
+        const response = await this.store.unfollowTeam(team_id, team_name);
+        console.log(response);
+    }
 
 	getTeamsForCompetition(competition) {
 		this.competitions.forEach( obj => {

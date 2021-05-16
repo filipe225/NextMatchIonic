@@ -19,8 +19,7 @@ const routes: Routes = [
 	},
     {
         path: 'teams',
-        loadChildren: () => import('./pages/teams/teams.module').then( m => m.TeamsPageModule),
-        canActivate: [AngularFireAuthGuard]
+        loadChildren: () => import('./pages/teams/teams.module').then( m => m.TeamsPageModule)
     },
     {
         path: 'user-settings',

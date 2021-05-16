@@ -6,7 +6,6 @@ import { FootballDataService } from './football-api.service';
 import { LocalStorageService } from './local-storage.service';
 import Competition from '../helpers/Competition';
 import Team from '../helpers/Team';
-import { R3ResolvedDependencyType } from '@angular/compiler';
 
 @Injectable({
   	providedIn: 'root'
@@ -174,7 +173,7 @@ export class StoreService {
         }
     }
 
-    async unfollowTeam(team_id: number) {
+    async unfollowTeam(team_id: number, team_name: string) {
         const user = this.getUser();
 
         const teams = user.teams;
@@ -186,6 +185,13 @@ export class StoreService {
         });
 
         const response = await this.firebase_service.updateUserDocWithMerge(user.uid, {teams: teams});
+
+        if(response.success) {
+            return {
+                success: true,
+                message: `Successfully unfollowed team ${team_name}`
+            }
+        }
         
     }
 

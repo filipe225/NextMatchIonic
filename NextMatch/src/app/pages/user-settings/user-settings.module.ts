@@ -8,13 +8,16 @@ import { UserSettingsPageRoutingModule } from './user-settings-routing.module';
 
 import { UserSettingsPage } from './user-settings.page';
 
+import { ComponentsModule } from '../../components/components.module'
+
 @NgModule({
-  imports: [
-    CommonModule,
-    FormsModule,
-    IonicModule,
-    UserSettingsPageRoutingModule
-  ],
-  declarations: [UserSettingsPage]
+    imports: [
+        CommonModule,
+        FormsModule,
+        IonicModule,
+        UserSettingsPageRoutingModule,
+        ComponentsModule
+    ],
+    declarations: [UserSettingsPage]
 })
 export class UserSettingsPageModule {}

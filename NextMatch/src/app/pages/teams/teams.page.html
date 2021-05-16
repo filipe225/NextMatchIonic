@@ -1,6 +1,8 @@
 
 <ion-content>
 
+    <app-logo></app-logo>
+
 	<ion-grid>
 		<ion-row>
 			<ion-col>
@@ -16,10 +18,18 @@
 		</ion-row>
 	</ion-grid>
 
-	<ion-list>
-		<div *ngFor="let team of teams">
-			<ion-label>{{ team.name }}</ion-label>
-		</div>
-	</ion-list>
 
+    <div class="teams-list">
+        <ion-list>
+            <div *ngFor="let team of teams">
+                <ion-label>{{ team.name }}</ion-label>
+                <ion-button *ngIf="!user_teams.includes(team.id); else unfollow" (click)="addNewTeam(team.id, team.short_name)" size="small">Follow</ion-button>
+                <ng-template #unfollow>
+                    <ion-button (click)="removeTeam(team.id, team.short_name)" size="small" color="danger">Unfollow</ion-button>
+                </ng-template>
+            </div>
+        </ion-list>        
+    </div>
+
+    <app-footer></app-footer>
 </ion-content>

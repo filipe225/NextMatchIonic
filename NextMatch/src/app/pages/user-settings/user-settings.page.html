@@ -1,11 +1,8 @@
-<ion-header>
-    <ion-toolbar>
-        <ion-title>user-settings</ion-title>
-    </ion-toolbar>
-</ion-header>
-
 <ion-content>
 
+    <app-logo></app-logo>
+
+    <h3>User Settings</h3>
     <ion-form>
         <ion-item>
             <ion-label position="floating">Display Name</ion-label>
@@ -18,5 +15,17 @@
             </ion-select>
         </ion-item>
     </ion-form>
+
+    <ion-list>
+        <ion-label>
+            Following Teams
+        </ion-label>
+        <ion-item *ngFor="let team in teams">
+            <ion-label>{{ team.shortName }}</ion-label>
+            <ion-button (click)="unfollowTeam(team.id)" color="danger">Unfollow</ion-button>
+        </ion-item>
+    </ion-list>
+
+    <app-footer></app-footer>
 
 </ion-content>
