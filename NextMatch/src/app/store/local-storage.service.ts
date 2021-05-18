@@ -35,7 +35,9 @@ export class LocalStorageService {
 
 	getData() {
 		const data = JSON.parse(localStorage.getItem(this.local_key));
-        this.setState(data);
+        if(data) {
+            this.setState(data);
+        }
         return data;
 	}
 

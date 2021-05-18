@@ -195,9 +195,10 @@ export class StoreService {
         
     }
 
-
-    getNextMatches(teams) {
+    async getNextMatches() {
         // if (this.user$.type === 'normal') {}
+
+        const teams = this.getUser().teams;
 
         if(teams.length === 0) {
             return {
@@ -207,7 +208,7 @@ export class StoreService {
             }
         }
 
-        const response:any = this.football_service.getNextMatches(teams);
+        const response:any = await this.football_service.getNextMatches(teams);
         if( response.success ) {
             this.local_storage_service.setData({
                 last_request: new Date().toISOString(),
@@ -217,6 +218,10 @@ export class StoreService {
             console.log("Successo falso");
         }
 
+    }
+
+    getStorageMatches() {
+        return this.local_storage_service.getData();
     }
 
 }

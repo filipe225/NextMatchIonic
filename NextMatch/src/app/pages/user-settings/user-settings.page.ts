@@ -9,11 +9,17 @@ import { StoreService } from 'src/app/store/store.service';
 })
 export class UserSettingsPage implements OnInit {
 
+    display_name: string;
+    timezone: string;
     teams: Array<Team>;
 
     constructor(public store: StoreService) { }
 
     ngOnInit() {
+
+        this.display_name = '';
+        this.timezone = '';
+
         this.teams = [
             {
                 id: 3,
@@ -33,9 +39,14 @@ export class UserSettingsPage implements OnInit {
         ]
     }
 
-    async unfollowTeam(team_id) {
+    async unfollowTeam(team_id, team_name) {
         console.log(team_id);
+
+        this.store.unfollowTeam(team_id, team_name)
     }
 
+    saveUserSettings() {
+        console.log(this.display_name, this.timezone);
+    }
 
 }

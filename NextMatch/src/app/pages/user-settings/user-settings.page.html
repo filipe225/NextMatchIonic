@@ -14,6 +14,9 @@
                 <ion-option>Teste</ion-option>
             </ion-select>
         </ion-item>
+        <ion-item>
+            <ion-button (click)="saveUserSettings()">Save</ion-button>
+        </ion-item>
     </ion-form>
 
     <ion-list>
@@ -21,8 +24,8 @@
             Following Teams
         </ion-label>
         <ion-item *ngFor="let team in teams">
-            <ion-label>{{ team.shortName }}</ion-label>
-            <ion-button (click)="unfollowTeam(team.id)" color="danger">Unfollow</ion-button>
+            <ion-label>{{ team.short_name }}</ion-label>
+            <ion-button (click)="unfollowTeam(team.id, team.short_name)" color="danger">Unfollow</ion-button>
         </ion-item>
     </ion-list>
 

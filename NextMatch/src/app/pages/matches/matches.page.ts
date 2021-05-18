@@ -12,29 +12,16 @@ export class MatchesPage implements OnInit {
 
 	loading: boolean = true;
 
-	matches: Array<Match> = [
-		{
-			home_team: 'Porto',
-			away_team: 'Benfica',
-			competition: 'Liga NOS'
-		},
-		{
-			home_team: 'Porto',
-			away_team: 'Benfica',
-			competition: 'Liga NOS'
-		},
-		{
-			home_team: 'Porto',
-			away_team: 'Benfica',
-			competition: 'Liga NOS'
-		}
-	]
+	matches: Array<Match> | null;
 
 	constructor(public store: StoreService, public toastCtrl: ToastController) { }
 
 	ngOnInit() {
         //this.displayToast('Hello world');
-        this.matches = [...this.matches, ...this.matches, ...this.matches];
+        //this.matches = [...this.matches, ...this.matches, ...this.matches];
+
+        console.log(this.store.getStorageMatches())
+        this.matches = this.store.getStorageMatches();
 
 	}
 
@@ -46,7 +33,12 @@ export class MatchesPage implements OnInit {
 		  toast.present();
 	}
 
-	fetchNextMatches() {
-		//this.store.fetchNewData();
+	async fetchNextMatches() {
+	    const response = await this.store.getNextMatches();
+        if(response.success) {
+            this.matches = response.data;
+        } else {
+            console.log("Error retrieving matches data");
+        }
 	}
 }

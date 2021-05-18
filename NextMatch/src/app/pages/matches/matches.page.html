@@ -3,14 +3,33 @@
 
     <app-logo></app-logo>
 
-	<ion-infinite-scroll threshold="100px" (ionInfinite)="loadData($event)">
+    <div class="main-content">
+        <h4>
+            Following Teams' Matches
+            <ion-button (click)="fetchNextMatches()">
+                <ion-icon name="add-circle-outline"></ion-icon>
+            </ion-button>
+        </h4>
+        <ion-label class="last-request-date">teste</ion-label>
+        <div *ngIf="!matches; else showMatches">
+            <ion-label> Start following teams. Follow your first team by clicking the button below</ion-label>
+            <ion-button expand="block" color="primary" href="/teams">Follow Teams</ion-button>
+        </div>
+        <ng-template #showMatches>
+            <div class="content" >            
+                <div *ngFor="let match of matches">
+                    <app-match-card [match]="match"></app-match-card>
+                </div>	
+            </div>
+        </ng-template>   
+    </div>
+
+	<!-- <ion-infinite-scroll threshold="100px" (ionInfinite)="loadData($event)">
 		<ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="Loading more data...">
-            <div *ngFor="let match of matches">
-                <app-match-card [match]="match"></app-match-card>
-            </div>				
+			
 		</ion-infinite-scroll-content>
 	  </ion-infinite-scroll>
-	  
+	   -->
 
 
     <app-footer></app-footer>

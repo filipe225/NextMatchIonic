@@ -17,13 +17,14 @@ export class FootballDataService {
   	constructor(public http: HttpClient) {
 	}
     
-    getNextMatches(teams: Array<number>) {
+    getNextMatches(teams: Array<Number>) {
         const promises: Array<Promise<any>> = [];
 
         teams.forEach( team_id => {
             promises.push(
                 this.http.get(`${this.base_url}teams/${team_id}/matches?limit=2`, {
                     "headers": {
+                        "Access-Control-Allow-Headers": "*",
                         "x-rapidapi-host": "v3.football.api-sports.io",
                         "X-Auth-Token": "4882ca4f5e6f4b6286814e9878749aa0"
                     }
