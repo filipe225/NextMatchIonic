@@ -6,6 +6,6 @@ export interface User {
 	type: string,
 	display_name: string,
 	timezone: string,
-	teams: Array<Number>,
+	teams: Array<Object>,
 	last_request: string
 }

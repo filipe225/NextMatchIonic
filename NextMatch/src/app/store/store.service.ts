@@ -142,13 +142,13 @@ export class StoreService {
 		}
 	}
 
-    async followTeam(team_id: number, team_name: string) {
+    async followTeam({id, name, short_name}) {
         const user = this.getUser();
         const max_teams = user.type === 'admin' ? 10 : 5;
         
         if (user.teams.length < max_teams) {
             const teams = user.teams;
-            teams.push(team_id);
+            teams.push( { id, name, short_name} );
             const response = await this.firebase_service.updateUserDocWithMerge(user.uid, {teams: teams});
 
             if (response.success) {
@@ -157,7 +157,7 @@ export class StoreService {
                 });
                 return {
                     success: true,
-                    message: `Following team ${team_name}`
+                    message: `Following team ${name}`
                 }
             } else {
                 return {
@@ -173,13 +173,13 @@ export class StoreService {
         }
     }
 
-    async unfollowTeam(team_id: number, team_name: string) {
+    async unfollowTeam( {id, name} ) {
         const user = this.getUser();
 
         const teams = user.teams;
 
-        teams.forEach( (id, i) => {
-            if (id=== team_id) {
+        teams.forEach( (obj: any, i) => {
+            if (obj.id === id) {
                 teams.splice(i, 1);
             }
         });
@@ -189,7 +189,7 @@ export class StoreService {
         if(response.success) {
             return {
                 success: true,
-                message: `Successfully unfollowed team ${team_name}`
+                message: `Successfully unfollowed team ${name}`
             }
         }
         
@@ -199,6 +199,7 @@ export class StoreService {
         // if (this.user$.type === 'normal') {}
 
         const teams = this.getUser().teams;
+        console.log(teams);
 
         if(teams.length === 0) {
             return {
@@ -208,14 +209,21 @@ export class StoreService {
             }
         }
 
-        const response:any = await this.football_service.getNextMatches(teams);
+        const ids = teams.map( (obj: any) => { return obj.id});
+        const response:any = await this.football_service.getNextMatches(ids);
+        console.log(response)
         if( response.success ) {
             this.local_storage_service.setData({
                 last_request: new Date().toISOString(),
                 data: response.data
             })
+            return response
         } else {
             console.log("Successo falso");
+            return {
+                success: false,
+                message: 'Error'
+            }
         }
 
     }

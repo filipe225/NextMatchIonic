@@ -13,7 +13,7 @@ export class TeamsPage implements OnInit {
 
 	teams: Array<Team>;
 
-    user_teams: Array<Number>;
+    user_teams: Array<Object>;
 
 	constructor(public store: StoreService) { }
 
@@ -24,22 +24,34 @@ export class TeamsPage implements OnInit {
 			this.competitions = comps;
 		});
 
-        this.store.user$.subscribe( user_data => {
-            this.user_teams = user_data.teams;
-        })
+        try {
+            this.store.user$.subscribe( user_data => {
+                this.user_teams = user_data.teams;
+            });
+        } catch (error) {
+            
+        }
 	}
 
-    async addNewTeam(team_id, team_name) {
+    async addNewTeam(team_id, team_name, team_short_name) {
         console.log("Team Id: ", team_id);
 
-        const response = await this.store.followTeam(team_id, team_name)
+        const response = await this.store.followTeam(
+            {
+                id: team_id, 
+                name: team_name,
+                short_name: team_short_name
+            })
         console.log(response);
     }
 
     async removeTeam(team_id, team_name) {
         console.log("Team Id: ", team_id)
 
-        const response = await this.store.unfollowTeam(team_id, team_name);
+        const response = await this.store.unfollowTeam({
+            id: team_id, 
+            name: team_name
+        });
         console.log(response);
     }
 

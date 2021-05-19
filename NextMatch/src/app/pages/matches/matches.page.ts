@@ -21,7 +21,7 @@ export class MatchesPage implements OnInit {
         //this.matches = [...this.matches, ...this.matches, ...this.matches];
 
         console.log(this.store.getStorageMatches())
-        this.matches = this.store.getStorageMatches();
+        this.matches = this.store.getStorageMatches().data;
 
 	}
 

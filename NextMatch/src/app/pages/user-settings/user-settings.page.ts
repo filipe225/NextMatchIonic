@@ -11,7 +11,7 @@ export class UserSettingsPage implements OnInit {
 
     display_name: string;
     timezone: string;
-    teams: Array<Team>;
+    teams: any;
 
     constructor(public store: StoreService) { }
 
@@ -20,29 +20,18 @@ export class UserSettingsPage implements OnInit {
         this.display_name = '';
         this.timezone = '';
 
-        this.teams = [
-            {
-                id: 3,
-                short_name: 'FCP',
-                name: 'FCP'
-            },
-            {
-                id: 3,
-                short_name: 'FCP',                
-                name: 'FCP'
-            },
-            {
-                id: 3,
-                short_name: 'FCP',                
-                name: 'FCP'
-            }
-        ]
+        this.store.user$.subscribe( user => {
+            this.teams = user.teams;
+        });
     }
 
     async unfollowTeam(team_id, team_name) {
         console.log(team_id);
 
-        this.store.unfollowTeam(team_id, team_name)
+        this.store.unfollowTeam({
+            id: team_id, 
+            name: team_name
+        })
     }
 
     saveUserSettings() {
