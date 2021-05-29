@@ -4,21 +4,36 @@
 			<ion-row>
 				<ion-col>
 					<div class="home-team">
-						<ion-label>{{ match.home_team }}</ion-label>
+						<ion-label [color]="isFollowing(match.homeTeam.name) ? 'main' : ''">{{ match.homeTeam.name }}</ion-label>
 					</div>
 				</ion-col>
-				<ion-col>
-					<div class="middle">
-						<ion-label>{{ match.date }}</ion-label>	
-						<ion-label>{{ match.competition }}</ion-label>
-					</div>
+				<ion-col *ngIf="match.status === 'FINISHED'">
+                    <div class="ion-text-center">
+                        <ion-label class="bigger-text">{{ match.score.fullTime.homeTeam  + ' - ' + match.score.fullTime.awayTeam }}</ion-label>
+                    </div>
 				</ion-col>
 				<ion-col>
 					<div class="away-team">
-						<ion-label>{{ match.away_team }}</ion-label>
+						<ion-label [color]="isFollowing(match.awayTeam.name) ? 'main' : ''">{{ match.awayTeam.name }}</ion-label>
 					</div>
 				</ion-col>
 			</ion-row>
+            <ion-row>
+                <ion-col>
+                    <div class="ion-text-center">
+                        <ion-label [class]=" match.status === 'FINISHED' ? 'finished' : 'to-start'">{{ match.date }}</ion-label>	
+                    </div>
+                </ion-col>
+            </ion-row>
+            <ion-row>
+                <ion-col>
+                    <div class="ion-text-center">
+                        <ion-label color="darker-green">{{ match.competition.name }}</ion-label>
+                    </div>
+                </ion-col>
+            </ion-row>
 		</ion-grid>
 	</ion-card-content>
 </ion-card>
+
+<!-- [class]="match.status === 'FINISHED' ? 'finished' : 'to-start'" -->

@@ -38,11 +38,10 @@ export class RegisterFormComponent implements OnInit {
 
 	RegisterForm: FormGroup;
 
-	timezones: Array<string> = ['Etc/GMT', 'Etc/GMT+0', 'Etc/GMT+1', 'Etc/GMT+2', 'Etc/GMT+3', 'Etc/GMT+4',
-		'Etc/GMT+5', 'Etc/GMT+6', 'Etc/GMT+7', 'Etc/GMT+8', 'Etc/GMT+9', 'Etc/GMT+10', 'Etc/GMT+11', 'Etc/GMT+12',
-		'Etc/GMT-0', 'Etc/GMT-1', 'Etc/GMT-2', 'Etc/GMT-3', 'Etc/GMT-4', 'Etc/GMT-5', 'Etc/GMT-6', 'Etc/GMT-7',
-		'Etc/GMT-8', 'Etc/GMT-9', 'Etc/GMT-10', 'Etc/GMT-11', 'Etc/GMT-12', 'Etc/GMT-13', 'Etc/GMT-14',	'Etc/GMT0',
-		'Etc/Greenwich','Etc/UCT'];
+	timezones: Array<string> = ['GMT','GMT+1', 'GMT+2', 'GMT+3', 'GMT+4','GMT+5', 
+        'GMT+6', 'GMT+7', 'GMT+8', 'GMT+9', 'GMT+10', 'GMT+11', 'GMT+12',
+		'GMT-1', 'GMT-2', 'GMT-3', 'GMT-4', 'GMT-5', 'GMT-6', 'GMT-7',
+		'GMT-8', 'GMT-9', 'GMT-10', 'GMT-11', 'GMT-12', 'GMT-13', 'GMT-14'];
 
 	constructor() { }
 
@@ -93,7 +92,7 @@ export class RegisterFormComponent implements OnInit {
 	}
 
 	getTimezone() {
-		return this.RegisterForm.get('timezone').value;
+		return 'Etc/' + this.RegisterForm.get('timezone').value;
 	}
 
 	registerUser() {

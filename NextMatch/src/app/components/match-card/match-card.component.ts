@@ -9,9 +9,15 @@ import { Match } from 'src/app/helpers/Match';
 export class MatchCardComponent implements OnInit {
 
 	@Input() match: Match
+    @Input() teams_following: Array<any>
 
 	constructor() { }
 
-	ngOnInit() {}
+	ngOnInit() {
+        console.log(this.teams_following);
+    }
 
+    isFollowing(team_name) {
+        return this.teams_following.some( (obj: any) =>  obj.name === team_name); 
+    }
 }

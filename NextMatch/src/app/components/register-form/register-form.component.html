@@ -1,6 +1,6 @@
 <form [formGroup]="RegisterForm" >
 
-	<ion-title class="text-center">Register</ion-title>
+	<ion-title class="ion-text-center my-ion-title" color="darker-green">Register</ion-title>
 
 	<ion-item>
 		<ion-label position="floating">Email</ion-label>
@@ -82,6 +82,9 @@
 		</ng-container>
 	</div>
 
-	<ion-button color="primary" expand="block" (click)="registerUser()" [disabled]="RegisterForm.status === 'INVALID'">Register</ion-button>
+    <div class="ion-padding-top">
+        <ion-button color="main" expand="block" (click)="registerUser()" [disabled]="RegisterForm.status === 'INVALID'">Register</ion-button>
+    </div>
+
 
 </form>

@@ -31,3 +31,27 @@
 	font-size: 10px;
 	margin: 2px;
 }
+
+.button-link {
+    border: none;
+    background: none;
+    padding: 0;
+    margin: 0;
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+.smaller-text {
+    font-size: 0.85rem;
+}
+
+.smaller-text-2 {
+    font-size: 0.95rem;
+}
+
+.offline-matches {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}

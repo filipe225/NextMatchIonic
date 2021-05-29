@@ -6,13 +6,13 @@ import { FootballDataService } from './football-api.service';
 import { LocalStorageService } from './local-storage.service';
 import Competition from '../helpers/Competition';
 import Team from '../helpers/Team';
+import 'moment-timezone';
+import * as moment from 'moment';
 
 @Injectable({
   	providedIn: 'root'
 })
 export class StoreService {
-
-    private last_football_data_request: Date;
 
 	readonly user$: Observable<User>;
 	private _user$: BehaviorSubject<User>;
@@ -213,11 +213,29 @@ export class StoreService {
         const response:any = await this.football_service.getNextMatches(ids);
         console.log(response)
         if( response.success ) {
+
+            const user_timezone = this.getUser().timezone;
+            const matches_data = [...response.data].map( (obj: any) => {
+                return obj.matches;
+            });
+
+            const formatted_data = [].concat.apply([], matches_data).map( (obj) => {              
+                obj.date = moment.tz(obj.utcDate, "YY-MM-DD HH:mm", user_timezone);
+                return obj;
+            });
+
+            console.log("FORMATTED DATA: ", formatted_data);
+
             this.local_storage_service.setData({
                 last_request: new Date().toISOString(),
-                data: response.data
+                data: formatted_data
             })
-            return response
+
+            return {
+                success: true,
+                message: 'Successfully retrieved matches',
+                data: formatted_data
+            }
         } else {
             console.log("Successo falso");
             return {

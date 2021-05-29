@@ -1,4 +1,8 @@
 
+.bigger-text {
+    font-size: 1.1rem;
+}
+
 .home-team, .away-team, .middle {
 	display: flex;
 	align-items: center;
@@ -7,4 +11,12 @@
 
 .home-team, .away-team {
 	font-weight: bold;
+}
+
+.finished {
+    color: rgb(255, 55, 29);
+}
+
+.to-start {
+    color: var(--ion-color-darker-green);
 }

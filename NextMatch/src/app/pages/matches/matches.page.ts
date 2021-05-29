@@ -14,15 +14,16 @@ export class MatchesPage implements OnInit {
 
 	matches: Array<Match> | null;
 
+    teams_following: Array<any>;
+
 	constructor(public store: StoreService, public toastCtrl: ToastController) { }
 
 	ngOnInit() {
-        //this.displayToast('Hello world');
-        //this.matches = [...this.matches, ...this.matches, ...this.matches];
-
-        console.log(this.store.getStorageMatches())
         this.matches = this.store.getStorageMatches().data;
 
+        this.store.user$.subscribe( user => {
+            this.teams_following = user.teams;
+        });
 	}
 
     async displayToast(message) {
@@ -36,7 +37,8 @@ export class MatchesPage implements OnInit {
 	async fetchNextMatches() {
 	    const response = await this.store.getNextMatches();
         if(response.success) {
-            this.matches = response.data;
+            this.matches = response.data;~
+            console.log(this.matches)
         } else {
             console.log("Error retrieving matches data");
         }

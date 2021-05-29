@@ -2,6 +2,8 @@
 
 <form [formGroup]="LoginForm" novalidate>
 
+    <ion-title class="ion-text-center my-ion-title" color="darker-green">Login</ion-title>
+
 	<ion-item lines="full">
 		<ion-label position="floating">Email</ion-label>
 		<ion-input type="text" formControlName="email" required></ion-input>
@@ -35,6 +37,6 @@
 	<br>
 
 
-	<ion-button color="primary" expand="block" (click)="loginUser()" [disabled]="LoginForm.status === 'INVALID'">Login</ion-button>
+	<ion-button color="main" expand="block" (click)="loginUser()" [disabled]="LoginForm.status === 'INVALID'">Login</ion-button>
 
 </form>

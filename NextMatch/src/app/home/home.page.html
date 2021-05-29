@@ -9,9 +9,13 @@
 				</ion-col>
 			</ion-row>
 			<ion-row>
-				<div class="full-center">
-					<ion-label>Not yet registered ? <ion-button (click)="showRegisterForm()">Register here</ion-button> </ion-label>
-				</div>
+                <ion-col>
+                    <div class="ion-text-center ion-padding-top ion-padding-bottom">
+                        <ion-label class="smaller-text">Not yet registered ? 
+                            <span (click)="showRegisterForm()" class="button-link light-green-text">Register here</span> 
+                        </ion-label>
+                    </div>                    
+                </ion-col>
 			</ion-row>
 		</ion-grid>
 
@@ -24,23 +28,31 @@
 				</ion-col>
 			</ion-row>
 			<ion-row>
-				<div class="full-center">
-					<ion-label>Already registered ? <ion-button (click)="showLoginForm()">Login here</ion-button> </ion-label>
-				</div>
+                <ion-col size="12">
+                    <div class="ion-text-center ion-padding-top ion-padding-bottom">
+                        <ion-label class="smaller-text">Already registered ? 
+                            <span (click)="showLoginForm()" class="button-link dark-green-text">Login here</span> 
+                        </ion-label>
+                    </div>                    
+                </ion-col>
 			</ion-row>
 		</ion-grid>
 	</ng-template>
 
 
-	<div *ngIf="local_storage_data">
-		<ion-label>
+	<div *ngIf="local_storage_data && show_login_form" class="offline-matches ion-padding-top">
+		<ion-label class="smaller-text-2">
 			Check the latest request you made
 		</ion-label>
-		<ion-button href="/matches-offline">Go</ion-button>
+        <ion-label>
+            <ion-button fill="clear" href="/matches-offline">
+                <ion-icon name="arrow-forward-circle-outline"></ion-icon>
+            </ion-button>
+        </ion-label>
+        <ion-label>
+            without login
+        </ion-label>
 	</div>
-
-	<ion-button href='/matches'>Matches</ion-button>
-	<ion-button href="/teams">Teams</ion-button>
 
 </ion-content>
 
